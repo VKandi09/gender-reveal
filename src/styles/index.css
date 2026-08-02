@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Nunito:wght@700;800&family=Titan+One&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+.titan-one-regular {
+  font-family: 'Titan One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.acme-regular {
+  font-family: 'Acme', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.nunito-700 {
+  font-family: 'Nunito', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.nunito-800 {
+  font-family: 'Nunito', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Theme: pastel baby reveal gradient */
+:root {
+  --bg-start: #fdeef6; /* deeper pastel pink */
+  --bg-mid: #e6f0ff; /* deeper pastel blue */
+  --accent-pink: #f9bcd2;
+  --accent-blue: #c5d7f8;
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-mid) 100%);
+  color: #0f172a;
+}
+
+.confetti-piece {
+  width: 10px;
+  height: 18px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-radius: 2px;
+  opacity: 0.95;
+  transform-origin: center;
+}
+
+/* Smooth scrolling and snap helpers */
+html, body {
+  scroll-behavior: smooth;
+}
+
+.snap-start { scroll-snap-align: start; }
+.snap-y { scroll-snap-type: y mandatory; }
+
+/* Curtain / blinds overlay */
+.curtain {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.curtain__panel {
+  flex: 1 1 0;
+  background: linear-gradient(180deg, var(--accent-pink), var(--accent-blue));
+  transform-origin: bottom center;
+  transform: scaleY(1);
+}
+
+.curtain__message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  font-family: 'Titan One', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 400;
+  text-align: center;
+  pointer-events: none;
+  background: linear-gradient(135deg, #c8b7ff 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  text-shadow:
+    0 0 16px rgba(194, 91, 129, 0.9),
+    0 0 16px rgb(37, 85, 174);
+}
+
+
+/* Looped panels — vertical panels with internal scroll containers */
+.loop-section { width: 100%; overflow: visible; }
+.loop-section .panel {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+.panel-inner {
+  max-width: none;
+  width: 100%;
+  min-height: 100%;
+  padding: 3rem 1.5rem;
+  overflow: visible;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .panel-inner { padding: 2rem 1rem; max-width: 100%; }
+}
+
+.journey-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 22rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(248, 244, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.journey-glow {
+  position: absolute;
+  top: -3rem;
+  right: -5rem;
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 182, 193, 0.55), rgba(255, 255, 255, 0) 55%);
+  filter: blur(60px);
+  opacity: 0.95;
+  pointer-events: none;
+  animation: journeyGlow 10s ease-in-out infinite alternate;
+}
+
+.prediction-slider {
+  position: relative;
+  overflow: visible;
+}
+
+.prediction-card-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prediction-track {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+
+.prediction-card-slide {
+  display: block;
+  flex: 0 0 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+  scroll-snap-align: center;
+}
+
+.prediction-card {
+  width: 100%;
+  max-width: 100%;
+  background: radial-gradient(circle at top left, rgba(250, 230, 255, 0.88), rgba(255, 255, 255, 0.95));
+  border: 1px solid rgba(226, 219, 255, 0.72);
+}
+
+/* Improve contrast for text and controls inside prediction cards */
+.prediction-card {
+  color: #0f172a; /* enforce readable text color */
+}
+.prediction-card p,
+.prediction-card .mb-4 {
+  color: #0f172a;
+}
+.prediction-card .rounded-2xl {
+  color: #0f172a;
+  background: #ffffff;
+}
+
+.journey-panel::before {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: -10%;
+  width: 40rem;
+  height: 40rem;
+  border-radius: 50%;
+  background: rgba(183, 209, 255, 0.236);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.journey-line {
+  opacity: 0;
+  transform: translateY(40px);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.302);
+}
+
+.journey-badge {
+  opacity: 0;
+  transform: scale(0.65);
+}
+
+@keyframes journeyGlow {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-18px, 18px) scale(1.08);
+  }
+}
+
+@media (max-width: 480px) {
+  .curtain__message {
+    font-size: 1.9rem;
+    padding: 0 1rem;
+  }
+}
+
+
+
+/* Decorative icon styles removed */
+
+
