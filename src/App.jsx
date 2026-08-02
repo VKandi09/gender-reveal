@@ -181,7 +181,7 @@ export default function App() {
         ))}
         <div className="curtain__message">One Little Heart.<br /> One Big Surprise.<br /> One Unforgettable Journey.❤️</div>
       </div>
-      {revealed && <Confetti color={result === 'pink' ? '#ff7ab6' : '#5abcee'} count={160} />}
+      {revealed && <Confetti color={result === 'girl' ? '#ff7ab6' : '#5abcee'} count={160} />}
       <SmoothScroll>
         <ParticlesBg />
         <div className="w-full">

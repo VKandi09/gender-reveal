@@ -43,21 +43,21 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     closest: '',
   })
   const [cards, setCards] = useState([
-    { name: 'Amma', message: "Can't wait to meet you little one!" },
-    { name: 'Papa', message: 'You are already so loved.' },
+    { id: Date.now() + 1, name: 'Amma', message: "Can't wait to meet you little one!" },
+    { id: Date.now() + 2, name: 'Papa', message: 'You are already so loved.' },
   ])
   const [guestName, setGuestName] = useState('')
   const [guestMessage, setGuestMessage] = useState('')
   const [countdown, setCountdown] = useState(0)
   const [isCounting, setIsCounting] = useState(false)
+  const [lastSubmittedId, setLastSubmittedId] = useState(null)
+  const lastSubmittedTimeoutRef = useRef(null)
+  const [displayedCards, setDisplayedCards] = useState([])
 
   const journeyRef = useRef(null)
   const panelsRef = useRef(null)
-  const wrapperRef = useRef(null)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [predictionSubmitted, setPredictionSubmitted] = useState(false)
-  const [wrapperWidth, setWrapperWidth] = useState(0)
-  const trackRef = useRef(null)
 
   const allAnswered = Object.values(answers).every(Boolean)
   const isLastQuestion = currentQuestion === questions.length - 1
@@ -74,26 +74,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     if (predictionSubmitted || !isLastQuestion || !allAnswered) return
     setPredictionSubmitted(true)
   }
-
-  useEffect(() => {
-    const update = () => {
-      const w = wrapperRef.current?.clientWidth || 0
-      setWrapperWidth(w)
-    }
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
-  }, [])
-
-  useEffect(() => {
-    if (!wrapperRef.current) return
-    try {
-      wrapperRef.current.scrollTo({ left: wrapperWidth * currentQuestion, behavior: 'smooth' })
-    } catch (e) {
-      wrapperRef.current.scrollLeft = wrapperWidth * currentQuestion
-    }
-  }, [currentQuestion, wrapperWidth])
-
 
   useEffect(() => {
     if (!isCounting) return
@@ -203,7 +183,14 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
 
   const addCard = () => {
     if (!guestName.trim() || !guestMessage.trim()) return
-    setCards((prev) => [{ name: guestName.trim(), message: guestMessage.trim() }, ...prev])
+    const newCard = { id: Date.now(), name: guestName.trim(), message: guestMessage.trim() }
+    setCards((prev) => [newCard, ...prev])
+    setLastSubmittedId(newCard.id)
+    if (lastSubmittedTimeoutRef.current) window.clearTimeout(lastSubmittedTimeoutRef.current)
+    lastSubmittedTimeoutRef.current = window.setTimeout(() => {
+      setLastSubmittedId(null)
+      lastSubmittedTimeoutRef.current = null
+    }, 5000)
     setGuestName('')
     setGuestMessage('')
   }
@@ -213,6 +200,45 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     setCountdown(3)
     setIsCounting(true)
   }
+
+  useEffect(() => {
+    const getCountForWidth = () => {
+      const w = window.innerWidth
+      if (w < 768) return 2
+      if (w < 1024) return 3
+      return 4
+    }
+
+    const pickDisplayed = () => {
+      const count = getCountForWidth()
+      if (!cards || cards.length === 0) {
+        setDisplayedCards([])
+        return
+      }
+
+      const submitted = lastSubmittedId ? cards.find((c) => c.id === lastSubmittedId) : null
+      const pool = cards.filter((c) => !submitted || c.id !== submitted.id)
+
+      // shuffle pool
+      const shuffled = [...pool].sort(() => Math.random() - 0.5)
+
+      const selection = submitted ? [submitted, ...shuffled.slice(0, Math.max(0, count - 1))] : shuffled.slice(0, count)
+      setDisplayedCards(selection)
+    }
+
+    pickDisplayed()
+    let resizeTimer = null
+    const onResize = () => {
+      window.clearTimeout(resizeTimer)
+      resizeTimer = window.setTimeout(pickDisplayed, 120)
+    }
+
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+      window.clearTimeout(resizeTimer)
+    }
+  }, [cards, lastSubmittedId])
 
   const totalVotes = voteCounts.boy + voteCounts.girl
   const boyPct = totalVotes ? Math.round((voteCounts.boy / totalVotes) * 100) : 50
@@ -320,30 +346,32 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     {
       title: 'Guess the Baby!',
       content: (
-        <div className="grid gap-6 lg:grid-cols-[1.4fr_0.9fr] w-full text-left items-start">
-          <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-6 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl">
+        <div className="grid gap-6 w-full text-left items-start lg:grid-cols-[1.4fr_0.9fr]">
+          <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-4 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-6 lg:sticky lg:top-24 overflow-visible">
             <div className="space-y-3">
-              <p className="text-xl sm:text-2xl font-semibold">Before We Reveal...</p>
-              <p className="text-base sm:text-lg text-slate-600 opacity-90">Tap your prediction and help us see which team is the loudest one.</p>
+              <p className="text-xl font-semibold sm:text-2xl">Before We Reveal...</p>
+              <p className="text-sm text-slate-600 opacity-90 sm:text-base">Tap your prediction and help us see which team is the loudest one.</p>
             </div>
-            <div className="rounded-[2rem] bg-gradient-to-br from-sky-100 via-white to-pink-100 p-6 shadow-inner">
-              <div className="mb-5 rounded-[2rem] border border-white/70 bg-white/90 p-5 shadow-sm">
-                <p className="text-sm uppercase tracking-[0.32em] text-slate-500">Vote now</p>
-                <h4 className="mt-4 text-3xl font-extrabold text-slate-900">Who will Baby be?</h4>
-                <p className="mt-3 text-sm text-slate-600">Your vote is added instantly and visible in the live count panel.</p>
+            <div className="rounded-[2rem] bg-gradient-to-br from-sky-100 via-white to-pink-100 p-5 shadow-inner sm:p-6">
+              <div className="mb-5 rounded-[2rem] border border-white/70 bg-white/90 p-5 shadow-sm sm:p-3">
+                <p className="pl-3 text-sm sm:text-xs uppercase tracking-[0.32em] text-slate-500">Vote now</p>
+                <h4 className="pl-3 mt-4 text-2xl font-extrabold text-slate-900 sm:text-3xl">Who will Baby be?</h4>
+                <p className="pl-3 mt-3 text-xs text-slate-600 sm:text-sm hidden sm:block">Your vote is added instantly and visible in the live count panel.</p>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 <motion.button
                   type="button"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleVote('boy')}
                   aria-pressed={selectedVote === 'boy'}
-                  className={`rounded-[2rem] border px-6 py-5 text-left text-base font-semibold transition ${selectedVote === 'boy' ? 'border-sky-500 bg-sky-500 text-white shadow-xl' : 'border-slate-200 bg-white text-slate-900 hover:border-sky-300 hover:bg-sky-50'}`}
+                  className={`flex flex-col gap-2 rounded-lg border px-3 py-2 sm:text-sm font-semibold transition ${selectedVote === 'boy' ? 'border-sky-500 bg-sky-500 text-white shadow' : 'border-slate-200 bg-white text-slate-900 hover:border-sky-300 hover:bg-sky-50'}`}
                 >
-                  <span className="block text-3xl">🩵</span>
-                  <span className="mt-3 block text-lg font-bold">Team Boy</span>
-                  <span className="mt-2 block text-sm text-slate-500">Blue hearts, strong vibes, and a baby prince.</span>
+                  <span className="flex items-center gap-3">
+                    <span className="text-3xl sm:text-xl">🩵</span>
+                    <span className="text-base sm:text-lg font-bold">Team Boy</span>
+                  </span>
+                  <span className="text-xs text-slate-500 sm:text-sm hidden sm:block">Blue hearts, strong vibes, and a baby prince.</span>
                 </motion.button>
                 <motion.button
                   type="button"
@@ -351,59 +379,61 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleVote('girl')}
                   aria-pressed={selectedVote === 'girl'}
-                  className={`rounded-[2rem] border px-6 py-5 text-left text-base font-semibold transition ${selectedVote === 'girl' ? 'border-pink-500 bg-pink-500 text-white shadow-xl' : 'border-slate-200 bg-white text-slate-900 hover:border-pink-300 hover:bg-pink-50'}`}
+                  className={`flex flex-col gap-2 rounded-lg border px-3 py-2 text-sm font-semibold transition ${selectedVote === 'girl' ? 'border-pink-500 bg-pink-500 text-white shadow' : 'border-slate-200 bg-white text-slate-900 hover:border-pink-300 hover:bg-pink-50'}`}
                 >
-                  <span className="block text-3xl">🩷</span>
-                  <span className="mt-3 block text-lg font-bold">Team Girl</span>
-                  <span className="mt-2 block text-sm text-slate-500">Pink dreams, sweet cheers, and a baby princess.</span>
+                  <span className="flex items-center gap-3">
+                    <span className="text-3xl sm:text-xl">🩷</span>
+                    <span className="text-base sm:text-lg font-bold">Team Girl</span>
+                  </span>
+                  <span className="text-xs text-slate-500 sm:text-sm hidden sm:block">Pink dreams, sweet cheers, and a baby princess.</span>
                 </motion.button>
               </div>
             </div>
             {voteToast && (
-              <div className="rounded-3xl border border-slate-200 bg-white/90 px-5 py-4 text-sm font-semibold text-neutral-900 shadow-lg">
+              <div className="rounded-3xl border border-slate-200 bg-white/90 px-4 py-3 text-sm font-semibold text-neutral-900 shadow-lg sm:px-5 sm:py-4">
                 Your vote is live — thank you for joining the fun!
               </div>
             )}
           </div>
 
-          <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-6 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl">
-            <div className="flex items-center justify-between gap-3 rounded-3xl bg-slate-900 px-5 py-4 text-white shadow-lg">
+          <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-5 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-6">
+            <div className="flex flex-col gap-3 rounded-3xl bg-slate-900 px-4 py-4 text-white shadow-lg sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.32em] text-slate-300 flex items-center gap-2">
                   <span className="inline-flex h-3 w-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_0_rgba(16,185,129,0.65)]" />
                   Live Vote Count
                 </p>
-                <p className="mt-2 text-3xl font-bold">{totalVotes}</p>
+                <p className="mt-2 text-2xl font-bold sm:text-3xl">{totalVotes}</p>
               </div>
-              <div className="rounded-3xl bg-white/10 px-4 py-2 text-sm font-semibold">Live</div>
+              <div className="rounded-3xl bg-white/10 px-3 py-2 text-xs font-semibold sm:px-4 sm:py-2 sm:text-sm">Live</div>
             </div>
-            <div className="space-y-4">
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                <div className="flex items-center justify-between gap-4">
+            <div className="space-y-3">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
+                <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-sm font-semibold text-slate-700">Team Boy</p>
-                    <p className="text-3xl font-extrabold text-sky-600">{voteCounts.boy}</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-700">Team Boy</p>
+                    <p className="mt-1 text-2xl font-extrabold text-sky-600 sm:text-3xl">{voteCounts.boy}</p>
                   </div>
-                  <div className="text-right text-sm text-slate-500">{boyPct}%</div>
+                  <div className="text-right text-xs text-slate-500 sm:text-sm">{boyPct}%</div>
                 </div>
-                <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-200">
+                <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200 sm:h-3">
                   <div className="h-full rounded-full bg-sky-500 transition-all duration-500" style={{ width: `${boyPct}%` }} />
                 </div>
               </div>
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                <div className="flex items-center justify-between gap-4">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
+                <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-sm font-semibold text-slate-700">Team Girl</p>
-                    <p className="text-3xl font-extrabold text-pink-600">{voteCounts.girl}</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-700">Team Girl</p>
+                    <p className="mt-1 text-2xl font-extrabold text-pink-600 sm:text-3xl">{voteCounts.girl}</p>
                   </div>
-                  <div className="text-right text-sm text-slate-500">{girlPct}%</div>
+                  <div className="text-right text-xs text-slate-500 sm:text-sm">{girlPct}%</div>
                 </div>
-                <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-200">
+                <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200 sm:h-3">
                   <div className="h-full rounded-full bg-pink-500 transition-all duration-500" style={{ width: `${girlPct}%` }} />
                 </div>
               </div>
             </div>
-            <div className="rounded-3xl border border-dashed border-slate-200 bg-white/80 p-4 text-sm text-slate-600">
+            <div className="hidden rounded-3xl border border-dashed border-slate-200 bg-white/80 p-3 text-xs text-slate-600 sm:block sm:p-4">
               <p className="font-semibold">How many people have voted?</p>
               <p className="mt-2 text-sm text-slate-500">Everyone’s prediction is counted instantly on this panel.</p>
             </div>
@@ -415,7 +445,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       title: 'Message Wall ❤️',
       content: (
         <div className="space-y-6 max-w-3xl mx-auto text-left">
-          <p className="text-xl sm:text-2xl font-semibold">Leave Baby Your First Blessing</p>
+          <p className="text-xl sm:text-2xl font-semibold text-center">Leave Baby Your First Blessing</p>
           <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
             <div className="space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-md">
               <div>
@@ -445,8 +475,8 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
               </button>
             </div>
             <div className="space-y-4">
-              {cards.map((card, index) => (
-                <div key={`${card.name}-${index}`} className="rounded-3xl border border-white/60 bg-white/90 p-5 shadow-lg">
+              {displayedCards.map((card) => (
+                <div key={card.id} className="rounded-3xl border border-white/60 bg-white/90 p-5 shadow-lg">
                   <p className="text-sm uppercase tracking-[0.22em] text-pink-600">{card.name}</p>
                   <p className="mt-3 text-base text-neutral-900">{card.message}</p>
                 </div>
@@ -493,10 +523,10 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
                     <div className="mt-4 h-36 rounded-3xl bg-white/90 flex items-center justify-center text-sm text-slate-400">Parents' photo</div>
                   </div>
                 </div>
-                <div className="rounded-3xl border border-white/60 bg-white p-4 text-sm text-neutral-700">
+                {/* <div className="rounded-3xl border border-white/60 bg-white p-4 text-sm text-neutral-700">
                   <p className="font-semibold">Due Date:</p>
                   <p>Fall 2026</p>
-                </div>
+                </div> */}
               </div>
             </div>
           )}
@@ -515,7 +545,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           <div key={i} className="panel" style={{ background }}>
             <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-center h-full">
               <div className="w-full">
-                <h3 className={`nunito-800 text-gray-700 text-4xl sm:text-5xl font-extrabold mb-4 leading-tight `}>{panel.title}</h3>
+                <h3 className={`nunito-800 text-gray-700 text-4xl sm:text-5xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
                 <div className="mb-6 text-xl sm:text-2xl opacity-90">{panel.content}</div>
               </div>
             </div>
