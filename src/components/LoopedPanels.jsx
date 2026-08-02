@@ -95,6 +95,8 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
 
 
   useEffect(() => {
+    if (!isCounting) return
+
     if (countdown <= 0) {
       setIsCounting(false)
       onReveal()
@@ -408,7 +410,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       ),
     },
     {
-      title: 'Final Reveal Panel',
+      title: 'Final Reveal',
       content: (
         <div className="space-y-8 max-w-3xl mx-auto text-center">
           <p className="text-xl sm:text-2xl font-semibold">Ready?</p>
@@ -428,11 +430,11 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           {revealed && (
             <div className="space-y-6">
               <div className="inline-flex items-center justify-center rounded-full bg-white/90 px-6 py-3 text-lg font-bold text-neutral-900 shadow-lg">
-                {result === 'pink' ? '🩷 IT’S A GIRL!' : '🩵 IT’S A BOY!'}
+                {result === 'boy' ? '🩵 IT’S A BOY!' : '🩷 IT’S A GIRL!'}
               </div>
               <div className="space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-xl text-left">
                 <p className="text-2xl font-semibold">Welcome to the world</p>
-                <p className="text-xl font-bold">Baby {result === 'pink' ? 'Girl' : 'Boy'} Kandi</p>
+                <p className="text-xl font-bold">Baby {result === 'girl' ? 'Girl' : 'Boy'} Gangarajula</p>
                 <p className="text-base opacity-90">We can't wait for you all to meet our little miracle.</p>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-4 text-left">

@@ -47,6 +47,13 @@ body {
   color: #0f172a;
 }
 
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
 .confetti-piece {
   width: 10px;
   height: 18px;

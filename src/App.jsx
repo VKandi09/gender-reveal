@@ -42,15 +42,13 @@ function Confetti({ color, count = 80 }) {
 }
 
 const SECTIONS = [
-  { title: "Uday & Varsha with Baby Gangarajula", subtitle: "" },
-//   { title: "Guess Time", subtitle: "Will it be bows or boats?" },
-//   { title: "Baby Vibes", subtitle: "Tiny kicks, big dreams" },
-//   { title: "Names?", subtitle: "Pick a name for fun" },
+  { title: "Uday & Varsha with Baby Gangarajula", subtitle: "" }
 ]
 
 export default function App() {
+  // Always start unrevealed on page load and do not persist result.
   const [revealed, setRevealed] = useState(false)
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState('boy') // always show "It's A Boy"
   const [curtainPlayed, setCurtainPlayed] = useState(false)
   const [curtainPanels, setCurtainPanels] = useState(() => {
     if (typeof window === 'undefined') return 6
@@ -163,10 +161,11 @@ export default function App() {
   }, [curtainPlayed])
 
   function doReveal() {
-    const pick = Math.random() > 0.5 ? 'pink' : 'blue'
-    setResult(pick)
+    setResult('boy')
     setRevealed(true)
   }
+
+  // No localStorage persistence: do nothing here.
 
   useEffect(() => {
     // play curtain once on initial load with responsive panel count
@@ -182,6 +181,7 @@ export default function App() {
         ))}
         <div className="curtain__message">One Little Heart.<br /> One Big Surprise.<br /> One Unforgettable Journey.❤️</div>
       </div>
+      {revealed && <Confetti color={result === 'pink' ? '#ff7ab6' : '#5abcee'} count={160} />}
       <SmoothScroll>
         <ParticlesBg />
         <div className="w-full">
@@ -205,7 +205,7 @@ export default function App() {
                 <p>
                   <SplitText className="titan-one-regular" text="Before we reveal whether Baby Gangarajula is a" />
                   <br />
-                  <SplitText className="titan-one-regular" text="little prince 👑 or little princess 👑..." />
+                  <SplitText className="titan-one-regular" text="Baby Boy or Baby Girl..." />
                 </p>
                 <p><SplitText className="titan-one-regular" text="we'd love for YOU to join the fun!" /></p>
               </div>
@@ -223,8 +223,6 @@ export default function App() {
           </section>
 
           <LoopedPanels onReveal={doReveal} revealed={revealed} result={result} />
-
-          {revealed && <Confetti color={result === 'pink' ? '#ff7ab6' : '#4f8cff'} count={160} />}
         </div>
       </SmoothScroll>
     </>
