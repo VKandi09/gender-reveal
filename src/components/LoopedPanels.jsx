@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -319,46 +320,92 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     {
       title: 'Guess the Baby!',
       content: (
-        <div className="space-y-6 w-full text-left">
-          <p className="text-xl sm:text-2xl font-semibold">Before We Reveal...</p>
-          <p className="text-base sm:text-lg opacity-90">What's YOUR prediction?</p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <button
-              onClick={() => handleVote('boy')}
-              className={`rounded-3xl px-6 py-4 font-semibold transition ${selectedVote === 'boy' ? 'bg-sky-500 text-white shadow-xl' : 'bg-white/90 text-sky-900 shadow-md hover:bg-sky-50'}`}
-            >
-              🩵 Team Boy
-            </button>
-            <button
-              onClick={() => handleVote('girl')}
-              className={`rounded-3xl px-6 py-4 font-semibold transition ${selectedVote === 'girl' ? 'bg-pink-500 text-white shadow-xl' : 'bg-white/90 text-pink-900 shadow-md hover:bg-pink-50'}`}
-            >
-              🩷 Team Girl
-            </button>
+        <div className="grid gap-6 lg:grid-cols-[1.4fr_0.9fr] w-full text-left items-start">
+          <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-6 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl">
+            <div className="space-y-3">
+              <p className="text-xl sm:text-2xl font-semibold">Before We Reveal...</p>
+              <p className="text-base sm:text-lg text-slate-600 opacity-90">Tap your prediction and help us see which team is the loudest one.</p>
+            </div>
+            <div className="rounded-[2rem] bg-gradient-to-br from-sky-100 via-white to-pink-100 p-6 shadow-inner">
+              <div className="mb-5 rounded-[2rem] border border-white/70 bg-white/90 p-5 shadow-sm">
+                <p className="text-sm uppercase tracking-[0.32em] text-slate-500">Vote now</p>
+                <h4 className="mt-4 text-3xl font-extrabold text-slate-900">Who will Baby be?</h4>
+                <p className="mt-3 text-sm text-slate-600">Your vote is added instantly and visible in the live count panel.</p>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleVote('boy')}
+                  aria-pressed={selectedVote === 'boy'}
+                  className={`rounded-[2rem] border px-6 py-5 text-left text-base font-semibold transition ${selectedVote === 'boy' ? 'border-sky-500 bg-sky-500 text-white shadow-xl' : 'border-slate-200 bg-white text-slate-900 hover:border-sky-300 hover:bg-sky-50'}`}
+                >
+                  <span className="block text-3xl">🩵</span>
+                  <span className="mt-3 block text-lg font-bold">Team Boy</span>
+                  <span className="mt-2 block text-sm text-slate-500">Blue hearts, strong vibes, and a baby prince.</span>
+                </motion.button>
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleVote('girl')}
+                  aria-pressed={selectedVote === 'girl'}
+                  className={`rounded-[2rem] border px-6 py-5 text-left text-base font-semibold transition ${selectedVote === 'girl' ? 'border-pink-500 bg-pink-500 text-white shadow-xl' : 'border-slate-200 bg-white text-slate-900 hover:border-pink-300 hover:bg-pink-50'}`}
+                >
+                  <span className="block text-3xl">🩷</span>
+                  <span className="mt-3 block text-lg font-bold">Team Girl</span>
+                  <span className="mt-2 block text-sm text-slate-500">Pink dreams, sweet cheers, and a baby princess.</span>
+                </motion.button>
+              </div>
+            </div>
+            {voteToast && (
+              <div className="rounded-3xl border border-slate-200 bg-white/90 px-5 py-4 text-sm font-semibold text-neutral-900 shadow-lg">
+                Your vote is live — thank you for joining the fun!
+              </div>
+            )}
           </div>
-          {voteToast && (
-            <div className="rounded-3xl bg-white/90 px-5 py-4 text-sm font-semibold text-neutral-900 shadow-lg">
-              Awesome! Your vote has been counted!
+
+          <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-6 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl">
+            <div className="flex items-center justify-between gap-3 rounded-3xl bg-slate-900 px-5 py-4 text-white shadow-lg">
+              <div>
+                <p className="text-xs uppercase tracking-[0.32em] text-slate-300 flex items-center gap-2">
+                  <span className="inline-flex h-3 w-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_0_rgba(16,185,129,0.65)]" />
+                  Live Vote Count
+                </p>
+                <p className="mt-2 text-3xl font-bold">{totalVotes}</p>
+              </div>
+              <div className="rounded-3xl bg-white/10 px-4 py-2 text-sm font-semibold">Live</div>
             </div>
-          )}
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm font-semibold text-neutral-700">
-                <span>Team Boy</span>
-                <span>{boyPct}%</span>
+            <div className="space-y-4">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-700">Team Boy</p>
+                    <p className="text-3xl font-extrabold text-sky-600">{voteCounts.boy}</p>
+                  </div>
+                  <div className="text-right text-sm text-slate-500">{boyPct}%</div>
+                </div>
+                <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-200">
+                  <div className="h-full rounded-full bg-sky-500 transition-all duration-500" style={{ width: `${boyPct}%` }} />
+                </div>
               </div>
-              <div className="h-3 rounded-full bg-slate-200 overflow-hidden">
-                <div className="h-full rounded-full bg-sky-500" style={{ width: `${boyPct}%` }} />
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-700">Team Girl</p>
+                    <p className="text-3xl font-extrabold text-pink-600">{voteCounts.girl}</p>
+                  </div>
+                  <div className="text-right text-sm text-slate-500">{girlPct}%</div>
+                </div>
+                <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-200">
+                  <div className="h-full rounded-full bg-pink-500 transition-all duration-500" style={{ width: `${girlPct}%` }} />
+                </div>
               </div>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm font-semibold text-neutral-700">
-                <span>Team Girl</span>
-                <span>{girlPct}%</span>
-              </div>
-              <div className="h-3 rounded-full bg-slate-200 overflow-hidden">
-                <div className="h-full rounded-full bg-pink-500" style={{ width: `${girlPct}%` }} />
-              </div>
+            <div className="rounded-3xl border border-dashed border-slate-200 bg-white/80 p-4 text-sm text-slate-600">
+              <p className="font-semibold">How many people have voted?</p>
+              <p className="mt-2 text-sm text-slate-500">Everyone’s prediction is counted instantly on this panel.</p>
             </div>
           </div>
         </div>
