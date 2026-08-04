@@ -251,13 +251,13 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     {
       title: 'Our Journey ❤️',
       content: (
-        <div className="w-full text-left">
+        <div className="w-full text-center">
           <div ref={journeyRef} className="journey-panel relative overflow-hidden rounded-[2rem] border border-white/30 bg-white/10 p-6 shadow-[0_30px_90px_rgba(255,255,255,0.08)] backdrop-blur-xl">
             <div className="journey-glow" />
             <div className="space-y-6">
-              <p className="journey-line text-3xl sm:text-4xl font-semibold leading-tight text-gray-600">From the moment we saw those two little lines... our lives changed forever.</p>
-              <p className="journey-line text-3xl sm:text-4xl font-semibold leading-tight text-gray-600">Every doctor's appointment... every tiny heartbeat... every little kick... brought us one step closer to meeting the greatest blessing of our lives.</p>
-              <p className="journey-line text-3xl sm:text-4xl font-semibold leading-tight text-gray-600">And today... we're finally ready to share our biggest surprise.</p>
+              <p className="journey-line italianno-regular text-4xl sm:text-5xl leading-tight text-gray-600">From the moment we saw those two little lines... our lives changed forever.</p>
+              <p className="journey-line italianno-regular text-4xl sm:text-5xl leading-tight text-gray-600">Every doctor's appointment... every tiny heartbeat... every little kick... brought us one step closer to meeting the greatest blessing of our lives.</p>
+              <p className="journey-line italianno-regular text-4xl sm:text-5xl leading-tight text-gray-600">And today... we're finally ready to share our biggest surprise.</p>
             </div>
           </div>
         </div>
@@ -268,7 +268,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       content: (
         <div className="space-y-8 max-w-5xl mx-auto text-left">
           <div className="space-y-3">
-            <p className="text-xl sm:text-2xl font-semibold">How Well Can You Predict Baby?</p>
+            <p className="italianno-regular text-3xl sm:text-4xl">How Well Can You Predict Baby?</p>
             <p className="max-w-2xl text-sm text-neutral-700 opacity-90">
               Slide through the prediction cards and tap your favorite answer for each question.
             </p>
@@ -346,16 +346,16 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     {
       title: 'Guess the Baby!',
       content: (
-        <div className="grid gap-6 w-full text-left items-start lg:grid-cols-[1.4fr_0.9fr]">
+          <div className="grid gap-6 w-full text-left items-start lg:grid-cols-[1.4fr_0.9fr]">
           <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-4 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-6 lg:sticky lg:top-24 overflow-visible">
             <div className="space-y-3">
-              <p className="text-xl font-semibold sm:text-2xl">Before We Reveal...</p>
+              <p className="italianno-regular text-3xl sm:text-4xl">Before We Reveal...</p>
               <p className="text-sm text-slate-600 opacity-90 sm:text-base">Tap your prediction and help us see which team is the loudest one.</p>
             </div>
-            <div className="rounded-[2rem] bg-gradient-to-br from-sky-100 via-white to-pink-100 p-5 shadow-inner sm:p-6">
+            <div className="rounded-[2rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))] p-5 shadow-inner sm:p-6">
               <div className="mb-5 rounded-[2rem] border border-white/70 bg-white/90 p-5 shadow-sm sm:p-3">
-                <p className="pl-3 text-sm sm:text-xs uppercase tracking-[0.32em] text-slate-500">Vote now</p>
-                <h4 className="pl-3 mt-4 text-2xl font-extrabold text-slate-900 sm:text-3xl">Who will Baby be?</h4>
+                <p className="pl-3 italianno-regular text-2xl text-slate-500">Vote now</p>
+                <h4 className="pl-3 mt-4 italianno-regular text-3xl text-slate-900 sm:text-4xl">Who will Baby be?</h4>
                 <p className="pl-3 mt-3 text-xs text-slate-600 sm:text-sm hidden sm:block">Your vote is added instantly and visible in the live count panel.</p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
@@ -369,9 +369,9 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
                 >
                   <span className="flex items-center gap-3">
                     <span className="text-3xl sm:text-xl">🩵</span>
-                    <span className="text-base sm:text-lg font-bold">Team Boy</span>
+                    <span className="italianno-regular text-2xl sm:text-3xl">Team Boy</span>
                   </span>
-                  <span className="text-xs text-slate-500 sm:text-sm hidden sm:block">Blue hearts, strong vibes, and a baby prince.</span>
+                  <span className="text-left text-xs text-slate-500 sm:text-sm hidden sm:block">Blue hearts, strong vibes, and a baby prince.</span>
                 </motion.button>
                 <motion.button
                   type="button"
@@ -383,9 +383,9 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
                 >
                   <span className="flex items-center gap-3">
                     <span className="text-3xl sm:text-xl">🩷</span>
-                    <span className="text-base sm:text-lg font-bold">Team Girl</span>
+                    <span className="italianno-regular text-2xl sm:text-3xl">Team Girl</span>
                   </span>
-                  <span className="text-xs text-slate-500 sm:text-sm hidden sm:block">Pink dreams, sweet cheers, and a baby princess.</span>
+                  <span className="text-left text-xs text-slate-500 sm:text-sm hidden sm:block">Pink dreams, sweet cheers, and a baby princess.</span>
                 </motion.button>
               </div>
             </div>
@@ -396,22 +396,22 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
             )}
           </div>
 
-          <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-5 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-6">
+            <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-5 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-6">
             <div className="flex flex-col gap-3 rounded-3xl bg-slate-900 px-4 py-4 text-white shadow-lg sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.32em] text-slate-300 flex items-center gap-2">
+                <p className="italianno-regular text-xl text-slate-300 flex items-center gap-2">
                   <span className="inline-flex h-3 w-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_0_rgba(16,185,129,0.65)]" />
                   Live Vote Count
                 </p>
                 <p className="mt-2 text-2xl font-bold sm:text-3xl">{totalVotes}</p>
               </div>
-              <div className="rounded-3xl bg-white/10 px-3 py-2 text-xs font-semibold sm:px-4 sm:py-2 sm:text-sm">Live</div>
+              <div className="rounded-3xl bg-white/10 px-3 py-2 italianno-regular text-xl sm:px-4 sm:py-2 sm:text-2xl">Live</div>
             </div>
             <div className="space-y-3">
               <div className="rounded-3xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-700">Team Boy</p>
+                    <p className="italianno-regular text-xl text-slate-700">Team Boy</p>
                     <p className="mt-1 text-2xl font-extrabold text-sky-600 sm:text-3xl">{voteCounts.boy}</p>
                   </div>
                   <div className="text-right text-xs text-slate-500 sm:text-sm">{boyPct}%</div>
@@ -423,7 +423,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
               <div className="rounded-3xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-700">Team Girl</p>
+                    <p className="italianno-regular text-xl text-slate-700">Team Girl</p>
                     <p className="mt-1 text-2xl font-extrabold text-pink-600 sm:text-3xl">{voteCounts.girl}</p>
                   </div>
                   <div className="text-right text-xs text-slate-500 sm:text-sm">{girlPct}%</div>
@@ -434,7 +434,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
               </div>
             </div>
             <div className="hidden rounded-3xl border border-dashed border-slate-200 bg-white/80 p-3 text-xs text-slate-600 sm:block sm:p-4">
-              <p className="font-semibold">How many people have voted?</p>
+              <p className="italianno-regular text-2xl">How many people have voted?</p>
               <p className="mt-2 text-sm text-slate-500">Everyone’s prediction is counted instantly on this panel.</p>
             </div>
           </div>
@@ -445,31 +445,31 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       title: 'Message Wall ❤️',
       content: (
         <div className="space-y-6 max-w-3xl mx-auto text-left">
-          <p className="text-xl sm:text-2xl font-semibold text-center">Leave Baby Your First Blessing</p>
+          <p className="italianno-regular text-4xl sm:text-5xl text-center">Leave Baby Your First Blessing</p>
           <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
             <div className="space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-md">
               <div>
-                <label className="block text-sm font-semibold text-neutral-900">Name</label>
+                <label className="block text-2xl text-neutral-900">Name</label>
                 <input
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
-                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-pink-400"
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-pink-400 text-xl"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-neutral-900">Message</label>
+                <label className="block text-2xl text-neutral-900">Message</label>
                 <textarea
                   value={guestMessage}
                   onChange={(e) => setGuestMessage(e.target.value)}
-                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-sky-400"
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-sky-400 text-xl"
                   rows={4}
                   placeholder="Write your blessing for baby"
                 />
               </div>
               <button
                 onClick={addCard}
-                className="rounded-full bg-slate-900 px-6 py-3 text-white shadow-lg hover:bg-slate-800"
+                className="rounded-full bg-slate-900 px-6 py-3 italianno-regular text-2xl text-white shadow-lg hover:bg-slate-800"
               >
                 Add your message
               </button>
@@ -478,7 +478,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
               {displayedCards.map((card) => (
                 <div key={card.id} className="rounded-3xl border border-white/60 bg-white/90 p-5 shadow-lg">
                   <p className="text-sm uppercase tracking-[0.22em] text-pink-600">{card.name}</p>
-                  <p className="mt-3 text-base text-neutral-900">{card.message}</p>
+                  <p className="mt-3 zeyada-regular text-xl sm:text-2xl text-neutral-900">{card.message}</p>
                 </div>
               ))}
             </div>
@@ -490,11 +490,11 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       title: 'Final Reveal',
       content: (
         <div className="space-y-8 max-w-3xl mx-auto text-center">
-          <p className="text-xl sm:text-2xl font-semibold">Ready?</p>
+          <p className="italianno-regular text-4xl sm:text-5xl">Ready?</p>
           {!revealed && !isCounting && (
             <button
               onClick={startReveal}
-              className="rounded-full bg-neutral-900 px-8 py-4 text-white text-lg font-bold shadow-2xl transition hover:bg-neutral-800"
+              className="rounded-full bg-neutral-900 px-8 py-4 text-white italianno-regular text-3xl shadow-2xl transition hover:bg-neutral-800"
             >
               Reveal Our Secret
             </button>
@@ -506,21 +506,21 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           )}
           {revealed && (
             <div className="space-y-6">
-              <div className="inline-flex items-center justify-center rounded-full bg-white/90 px-6 py-3 text-lg font-bold text-neutral-900 shadow-lg">
+              <div className="inline-flex items-center justify-center rounded-full bg-white/90 px-6 py-3 italianno-regular text-3xl text-neutral-900 shadow-lg">
                 {result === 'boy' ? '🩵 IT’S A BOY!' : '🩷 IT’S A GIRL!'}
               </div>
               <div className="space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-xl text-left">
-                <p className="text-2xl font-semibold">Welcome to the world</p>
-                <p className="text-xl font-bold">Baby {result === 'girl' ? 'Girl' : 'Boy'} Gangarajula</p>
-                <p className="text-base opacity-90">We can't wait for you all to meet our little miracle.</p>
+                <p className="italianno-regular text-4xl">Welcome to the world</p>
+                <p className="italianno-regular text-3xl">Baby {result === 'girl' ? 'Girl' : 'Boy'} Gangarajula</p>
+                <p className="italianno-regular text-2xl opacity-90">We can't wait for you all to meet our little miracle.</p>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-4 text-left">
-                    <p className="text-sm uppercase tracking-[0.26em] text-slate-500">Ultrasound photo</p>
-                    <div className="mt-4 h-36 rounded-3xl bg-white/90 flex items-center justify-center text-sm text-slate-400">Ultrasound photo</div>
+                    <p className="italianno-regular text-2xl text-slate-500">Ultrasound photo</p>
+                    <div className="mt-4 h-36 rounded-3xl bg-white/90 flex items-center justify-center italianno-regular text-2xl text-slate-400">Ultrasound photo</div>
                   </div>
                   <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-4 text-left">
-                    <p className="text-sm uppercase tracking-[0.26em] text-slate-500">Parents' photo</p>
-                    <div className="mt-4 h-36 rounded-3xl bg-white/90 flex items-center justify-center text-sm text-slate-400">Parents' photo</div>
+                    <p className="italianno-regular text-2xl text-slate-500">Parents' photo</p>
+                    <div className="mt-4 h-36 rounded-3xl bg-white/90 flex items-center justify-center italianno-regular text-2xl text-slate-400">Parents' photo</div>
                   </div>
                 </div>
                 {/* <div className="rounded-3xl border border-white/60 bg-white p-4 text-sm text-neutral-700">
@@ -545,7 +545,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           <div key={i} className="panel" style={{ background }}>
             <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-center h-full">
               <div className="w-full">
-                <h3 className={`nunito-800 text-gray-700 text-4xl sm:text-5xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
+                <h3 className={`yesteryear-regular text-gray-700 text-4xl sm:text-5xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
                 <div className="mb-6 text-xl sm:text-2xl opacity-90">{panel.content}</div>
               </div>
             </div>

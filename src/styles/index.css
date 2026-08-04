@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Acme&family=Nunito:wght@700;800&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Italianno&family=Yesteryear&family=Zeyada&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,29 +8,27 @@ html, body, #root {
   height: 100%;
 }
 
-.titan-one-regular {
-  font-family: 'Titan One', sans-serif;
+.great-vibes-regular {
+  font-family: 'Great Vibes', cursive;
   font-weight: 400;
   font-style: normal;
 }
 
-.acme-regular {
-  font-family: 'Acme', sans-serif;
+.zeyada-regular {
+  font-family: 'Zeyada', cursive;
   font-weight: 400;
   font-style: normal;
 }
 
-.nunito-700 {
-  font-family: 'Nunito', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
+.italianno-regular {
+  font-family: 'Italianno', cursive;
+  font-weight: 400;
   font-style: normal;
 }
 
-.nunito-800 {
-  font-family: 'Nunito', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 800;
+.yesteryear-regular {
+  font-family: 'Yesteryear', cursive;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -94,7 +92,6 @@ html, body {
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000;
-  font-family: 'Titan One', sans-serif;
   font-size: 2.6rem;
   font-weight: 400;
   text-align: center;
@@ -102,8 +99,6 @@ html, body {
   background: linear-gradient(135deg, #c8b7ff 0%, #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
   text-shadow:
     0 0 16px rgba(194, 91, 129, 0.9),
     0 0 16px rgb(37, 85, 174);
