@@ -16,7 +16,6 @@ import PredictionPanel from './panels/PredictionPanel'
 import VotePanel from './panels/VotePanel'
 import MessageWallPanel from './panels/MessageWallPanel'
 import FinalRevealPanel from './panels/FinalRevealPanel'
-import LockedPanel from './panels/LockedPanel'
 
 const questions = [
   {
@@ -95,7 +94,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   }
 
   const submitPredictions = () => {
-    if (predictionSubmitted || !isLastQuestion || !allAnswered || !confirmedName) return
+    if (predictionSubmitted || !isLastQuestion || !allAnswered) return
     setPredictionSubmitted(true)
     submitPrediction(confirmedName, answers).catch((err) => console.error('Failed to submit prediction', err))
   }
@@ -210,7 +209,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   }, [])
 
   const handleVote = (team) => {
-    if (selectedVote || !confirmedName) return
+    if (selectedVote) return
     setSelectedVote(team)
     castVote(confirmedName, team)
       .then(() => {
@@ -304,8 +303,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   const blueGradient = 'linear-gradient(135deg, #cee4f7 0%, #FFFFFF 100%)'
   const themeGradient = 'linear-gradient(180deg, var(--bg-start), var(--bg-mid))'
 
-  const hasName = Boolean(confirmedName)
-
   const panels = [
     {
       title: 'Our Journey ❤️',
@@ -324,28 +321,26 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
         />
       ),
     },
-    {
-      title: 'Fun Prediction Game',
-      content: hasName ? (
-        <PredictionPanel
-          questions={questions}
-          currentQuestion={currentQuestion}
-          showPrevious={showPrevious}
-          showNext={showNext}
-          handleAnswer={handleAnswer}
-          answers={answers}
-          submitPredictions={submitPredictions}
-          isLastQuestion={isLastQuestion}
-          allAnswered={allAnswered}
-          predictionSubmitted={predictionSubmitted}
-        />
-      ) : (
-        <LockedPanel message="Enter your name in the Message Wall above to unlock the prediction game!" />
-      ),
-    },
+    // {
+    //   title: 'Fun Prediction Game',
+    //   content: (
+    //     <PredictionPanel
+    //       questions={questions}
+    //       currentQuestion={currentQuestion}
+    //       showPrevious={showPrevious}
+    //       showNext={showNext}
+    //       handleAnswer={handleAnswer}
+    //       answers={answers}
+    //       submitPredictions={submitPredictions}
+    //       isLastQuestion={isLastQuestion}
+    //       allAnswered={allAnswered}
+    //       predictionSubmitted={predictionSubmitted}
+    //     />
+    //   ),
+    // },
     {
       title: 'Guess the Baby!',
-      content: hasName ? (
+      content: (
         <VotePanel
           selectedVote={selectedVote}
           handleVote={handleVote}
@@ -355,8 +350,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           boyPct={boyPct}
           girlPct={girlPct}
         />
-      ) : (
-        <LockedPanel message="Enter your name in the Message Wall above to unlock voting!" />
       ),
     },
     {

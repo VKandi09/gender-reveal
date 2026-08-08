@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function PredictionPanel({
   questions,
@@ -12,6 +12,12 @@ export default function PredictionPanel({
   allAnswered,
   predictionSubmitted,
 }) {
+  const [showThanksDialog, setShowThanksDialog] = useState(false)
+
+  useEffect(() => {
+    if (predictionSubmitted) setShowThanksDialog(true)
+  }, [predictionSubmitted])
+
   return (
     <div className="space-y-8 max-w-5xl mx-auto text-left">
       <div className="space-y-3">
@@ -84,9 +90,29 @@ export default function PredictionPanel({
           </p>
         </div>
       </div>
-      <div className="rounded-3xl bg-white/90 p-5 text-sm text-neutral-700 shadow-inner">
-        Thanks for sharing your predictions — this will be a fun memory to look back on.
-      </div>
+      {showThanksDialog && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+          onClick={() => setShowThanksDialog(false)}
+        >
+          <div
+            className="max-w-sm rounded-3xl bg-white p-6 text-center shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="italianno-regular text-4xl text-slate-900 mb-2">Thank You!</p>
+            <p className="text-sm text-neutral-700">
+              Thanks for sharing your predictions — this will be a fun memory to look back on.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowThanksDialog(false)}
+              className="mt-5 rounded-full bg-slate-900 px-6 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

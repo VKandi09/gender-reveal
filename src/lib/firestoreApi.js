@@ -51,3 +51,17 @@ export function subscribeToMessages(onChange) {
 export function addMessage(name, message) {
   return addDoc(messagesRef, { name, message, createdAt: serverTimestamp() })
 }
+
+export function subscribeToPredictions(onChange) {
+  const q = query(predictionsRef, orderBy('submittedAt', 'desc'))
+  return onSnapshot(q, (snap) => {
+    onChange(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
+  })
+}
+
+export function subscribeToVoteRecords(onChange) {
+  const q = query(voteRecordsRef, orderBy('votedAt', 'desc'))
+  return onSnapshot(q, (snap) => {
+    onChange(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
+  })
+}

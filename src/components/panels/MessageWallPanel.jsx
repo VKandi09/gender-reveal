@@ -13,19 +13,19 @@ export default function MessageWallPanel({
   return (
     <div className="space-y-6 max-w-3xl mx-auto text-left">
       <p className="italianno-regular text-4xl sm:text-5xl text-center">Leave Baby Your First Blessing</p>
-      <div className={hasMessages ? 'grid gap-4 lg:grid-cols-[1.4fr_1fr]' : 'flex justify-center'}>
+      <div className={hasMessages ? 'grid gap-4 md:grid-cols-[1.4fr_1fr]' : 'flex justify-center'}>
         <div className={`space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-md ${hasMessages ? '' : 'w-full max-w-xl'}`}>
           <div>
-            <label className="block text-2xl text-neutral-900">Name</label>
+            <label className="block yesteryear-regular text-2xl text-neutral-900">Name</label>
             <input
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
               className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-pink-400 text-xl"
-              placeholder="Your name"
+              placeholder="Enter your name"
             />
           </div>
           <div>
-            <label className="block text-2xl text-neutral-900">Message</label>
+            <label className="block yesteryear-regular text-2xl text-neutral-900">Message</label>
             <textarea
               value={guestMessage}
               onChange={(e) => setGuestMessage(e.target.value)}
