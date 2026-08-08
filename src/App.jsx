@@ -3,21 +3,28 @@ import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import SmoothScroll from './components/SmoothScroll'
 import ParticlesBg from './components/ParticlesBg'
-import LottiePlayer from './components/LottiePlayer'
 import { playCurtain } from './anim/curtain'
 import LoopedPanels from './components/LoopedPanels'
 
 function SplitText({ text, className }) {
+  const words = text.split(' ')
   return (
     <span className={className} aria-label={text}>
-      {Array.from(text).map((char, index) => (
-        <span
-          key={`${char}-${index}`}
-          className="split-char inline-block"
-          style={{ opacity: 0, display: 'inline-block' }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </span>
+      {words.map((word, wordIndex) => (
+        <React.Fragment key={wordIndex}>
+          <span style={{ display: 'inline-block' }}>
+            {Array.from(word).map((char, charIndex) => (
+              <span
+                key={charIndex}
+                className="split-char inline-block"
+                style={{ opacity: 0, display: 'inline-block' }}
+              >
+                {char}
+              </span>
+            ))}
+          </span>
+          {wordIndex < words.length - 1 ? ' ' : null}
+        </React.Fragment>
       ))}
     </span>
   )
@@ -98,9 +105,9 @@ export default function App() {
         {
           x: 0,
           opacity: 1,
-          duration: 0.7,
+          duration: 0.55,
           ease: 'power4.out',
-          stagger: 0.04,
+          stagger: 0.025,
         }
       )
     }
@@ -112,10 +119,10 @@ export default function App() {
         {
           y: 0,
           opacity: 1,
-          duration: 0.7,
+          duration: 0.55,
           ease: 'back.out(1.7)',
-          stagger: 0.05,
-          delay: 0.12,
+          stagger: 0.03,
+          delay: 0.08,
         }
       )
     }
@@ -127,10 +134,10 @@ export default function App() {
         {
           x: 0,
           opacity: 1,
-          duration: 0.7,
+          duration: 0.55,
           ease: 'power4.out',
-          stagger: 0.04,
-          delay: 0.18,
+          stagger: 0.025,
+          delay: 0.11,
         }
       )
     }
@@ -142,10 +149,10 @@ export default function App() {
         {
           y: 0,
           opacity: 1,
-          duration: 0.7,
+          duration: 0.55,
           ease: 'back.out(1.7)',
-          stagger: 0.03,
-          delay: 0.26,
+          stagger: 0.018,
+          delay: 0.16,
         }
       )
     }
@@ -155,7 +162,7 @@ export default function App() {
         opacity: 1,
         duration: 0.6,
         ease: 'power2.out',
-        delay: 6.9,
+        delay: 3.6,
       })
     }
   }, [curtainPlayed])
@@ -169,7 +176,7 @@ export default function App() {
 
   useEffect(() => {
     // play curtain once on initial load with responsive panel count
-    playCurtain({ selector: '.curtain', panels: curtainPanels, duration: 4.2, stagger: 0.08, onComplete: () => setCurtainPlayed(true) })
+    playCurtain({ selector: '.curtain', panels: curtainPanels, duration: 2.4, stagger: 0.05, onComplete: () => setCurtainPlayed(true) })
   }, [curtainPanels])
 
   return (
@@ -182,8 +189,8 @@ export default function App() {
         <div className="curtain__message great-vibes-regular">One Little Heart.<br /> One Big Surprise.<br /> One Unforgettable Journey.❤️</div>
       </div>
       {revealed && <Confetti color={result === 'girl' ? '#ff7ab6' : '#5abcee'} count={160} />}
+      <ParticlesBg />
       <SmoothScroll>
-        <ParticlesBg />
         <div className="w-full">
           {/* Render only the first landing section */}
           <section className={`min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-transparent text-neutral-800`}>
@@ -215,9 +222,6 @@ export default function App() {
                   <path d="M12 5v14" />
                   <path d="M19 12l-7 7-7-7" />
                 </svg>
-              </div>
-              <div className="mt-12 mx-auto w-40 h-40 sm:w-52 sm:h-52">
-                <LottiePlayer src="https://assets4.lottiefiles.com/packages/lf20_7p5s3gk8.json" style={{ width: '100%', height: '100%' }} />
               </div>
             </div>
           </section>

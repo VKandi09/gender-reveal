@@ -16,6 +16,7 @@ import PredictionPanel from './panels/PredictionPanel'
 import VotePanel from './panels/VotePanel'
 import MessageWallPanel from './panels/MessageWallPanel'
 import FinalRevealPanel from './panels/FinalRevealPanel'
+import LockedPanel from './panels/LockedPanel'
 
 const questions = [
   {
@@ -60,6 +61,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   })
   const [cards, setCards] = useState([])
   const [guestName, setGuestName] = useState('')
+  const [confirmedName, setConfirmedName] = useState('')
   const [guestMessage, setGuestMessage] = useState('')
   const [countdown, setCountdown] = useState(0)
   const [isCounting, setIsCounting] = useState(false)
@@ -93,9 +95,9 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   }
 
   const submitPredictions = () => {
-    if (predictionSubmitted || !isLastQuestion || !allAnswered) return
+    if (predictionSubmitted || !isLastQuestion || !allAnswered || !confirmedName) return
     setPredictionSubmitted(true)
-    submitPrediction(answers).catch((err) => console.error('Failed to submit prediction', err))
+    submitPrediction(confirmedName, answers).catch((err) => console.error('Failed to submit prediction', err))
   }
 
   useEffect(() => {
@@ -119,7 +121,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     if (!journey) return
 
     const lineEls = journey.querySelectorAll('.journey-line')
-    const badge = journey.querySelector('.journey-badge')
     const glow = journey.querySelector('.journey-glow')
 
     const split = new SplitText(lineEls, { type: 'lines', mask: 'lines' })
@@ -127,7 +128,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     gsap.set(journey, { opacity: 0, y: 14 })
     gsap.set(lineEls, { opacity: 1, y: 0 })
     gsap.set(split.lines, { yPercent: 100, opacity: 0 })
-    gsap.set(badge, { scale: 0.8, opacity: 0 })
 
     // Defer until after SmoothScroll registers its ScrollTrigger/locomotive-scroll
     // proxy (in a parent effect), so `scroller` below resolves correctly.
@@ -146,7 +146,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
 
       tl.to(journey, { opacity: 1, y: 0, duration: 0.9 })
         .to(split.lines, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.06 }, 0.15)
-        .to(badge, { scale: 1, opacity: 1, duration: 0.8 }, 0.28)
     }, 0)
 
     if (glow) {
@@ -211,9 +210,9 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   }, [])
 
   const handleVote = (team) => {
-    if (selectedVote) return
+    if (selectedVote || !confirmedName) return
     setSelectedVote(team)
-    castVote(team)
+    castVote(confirmedName, team)
       .then(() => {
         window.localStorage.setItem('gr-voted-team', team)
         setVoteToast(true)
@@ -227,6 +226,11 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
 
   const handleAnswer = (key, value) => {
     setAnswers((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const updateGuestName = (value) => {
+    setGuestName(value)
+    if (value.trim()) setConfirmedName(value.trim())
   }
 
   const addCard = async () => {
@@ -300,14 +304,29 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   const blueGradient = 'linear-gradient(135deg, #cee4f7 0%, #FFFFFF 100%)'
   const themeGradient = 'linear-gradient(180deg, var(--bg-start), var(--bg-mid))'
 
+  const hasName = Boolean(confirmedName)
+
   const panels = [
     {
       title: 'Our Journey ❤️',
       content: <JourneyPanel journeyRef={journeyRef} />,
     },
     {
-      title: 'Fun Prediction Game',
+      title: 'Message Wall ❤️',
       content: (
+        <MessageWallPanel
+          guestName={guestName}
+          setGuestName={updateGuestName}
+          guestMessage={guestMessage}
+          setGuestMessage={setGuestMessage}
+          addCard={addCard}
+          displayedCards={displayedCards}
+        />
+      ),
+    },
+    {
+      title: 'Fun Prediction Game',
+      content: hasName ? (
         <PredictionPanel
           questions={questions}
           currentQuestion={currentQuestion}
@@ -320,11 +339,13 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           allAnswered={allAnswered}
           predictionSubmitted={predictionSubmitted}
         />
+      ) : (
+        <LockedPanel message="Enter your name in the Message Wall above to unlock the prediction game!" />
       ),
     },
     {
       title: 'Guess the Baby!',
-      content: (
+      content: hasName ? (
         <VotePanel
           selectedVote={selectedVote}
           handleVote={handleVote}
@@ -334,19 +355,8 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           boyPct={boyPct}
           girlPct={girlPct}
         />
-      ),
-    },
-    {
-      title: 'Message Wall ❤️',
-      content: (
-        <MessageWallPanel
-          guestName={guestName}
-          setGuestName={setGuestName}
-          guestMessage={guestMessage}
-          setGuestMessage={setGuestMessage}
-          addCard={addCard}
-          displayedCards={displayedCards}
-        />
+      ) : (
+        <LockedPanel message="Enter your name in the Message Wall above to unlock voting!" />
       ),
     },
     {

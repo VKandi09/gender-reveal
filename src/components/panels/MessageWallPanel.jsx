@@ -8,11 +8,13 @@ export default function MessageWallPanel({
   addCard,
   displayedCards,
 }) {
+  const hasMessages = displayedCards.length > 0
+
   return (
     <div className="space-y-6 max-w-3xl mx-auto text-left">
       <p className="italianno-regular text-4xl sm:text-5xl text-center">Leave Baby Your First Blessing</p>
-      <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-        <div className="space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-md">
+      <div className={hasMessages ? 'grid gap-4 lg:grid-cols-[1.4fr_1fr]' : 'flex justify-center'}>
+        <div className={`space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-md ${hasMessages ? '' : 'w-full max-w-xl'}`}>
           <div>
             <label className="block text-2xl text-neutral-900">Name</label>
             <input
@@ -39,14 +41,16 @@ export default function MessageWallPanel({
             Add your message
           </button>
         </div>
-        <div className="space-y-4">
-          {displayedCards.map((card) => (
-            <div key={card.id} className="rounded-3xl border border-white/60 bg-white/90 p-5 shadow-lg">
-              <p className="text-sm uppercase tracking-[0.22em] text-pink-600">{card.name}</p>
-              <p className="mt-3 zeyada-regular text-xl sm:text-2xl text-neutral-900">{card.message}</p>
-            </div>
-          ))}
-        </div>
+        {hasMessages && (
+          <div className="space-y-4">
+            {displayedCards.map((card) => (
+              <div key={card.id} className="rounded-3xl border border-white/60 bg-white/90 p-5 shadow-lg">
+                <p className="text-sm uppercase tracking-[0.22em] text-pink-600">{card.name}</p>
+                <p className="mt-3 zeyada-regular text-xl sm:text-2xl text-neutral-900">{card.message}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

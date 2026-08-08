@@ -18,8 +18,17 @@ service cloud.firestore {
     match /predictions/{predictionId} {
       allow read: if false;
       allow create: if request.resource.data.keys().hasOnly(
-        ['firstWord', 'lookLike', 'spoil', 'owl', 'closest', 'submittedAt']
-      );
+        ['name', 'firstWord', 'lookLike', 'spoil', 'owl', 'closest', 'submittedAt']
+      )
+        && request.resource.data.name is string && request.resource.data.name.size() <= 60;
+      allow update, delete: if false;
+    }
+
+    match /voteRecords/{voteRecordId} {
+      allow read: if false;
+      allow create: if request.resource.data.keys().hasOnly(['name', 'team', 'votedAt'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 60
+        && request.resource.data.team in ['boy', 'girl'];
       allow update, delete: if false;
     }
 

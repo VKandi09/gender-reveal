@@ -12,6 +12,7 @@ import {
 import { db } from '../firebase'
 
 const votesRef = doc(db, 'votes', 'tally')
+const voteRecordsRef = collection(db, 'voteRecords')
 const predictionsRef = collection(db, 'predictions')
 const messagesRef = collection(db, 'messages')
 
@@ -22,16 +23,22 @@ export function subscribeToVotes(onChange) {
   })
 }
 
-export function castVote(team) {
-  return setDoc(
+export function castVote(name, team) {
+  const tallyWrite = setDoc(
     votesRef,
     { boy: increment(team === 'boy' ? 1 : 0), girl: increment(team === 'girl' ? 1 : 0) },
     { merge: true }
   )
+  // Best-effort: the individual record is only for owner visibility, so it
+  // shouldn't be able to fail the vote or unlock the UI if it errors.
+  addDoc(voteRecordsRef, { name, team, votedAt: serverTimestamp() }).catch((err) =>
+    console.error('Failed to record individual vote', err)
+  )
+  return tallyWrite
 }
 
-export function submitPrediction(answers) {
-  return addDoc(predictionsRef, { ...answers, submittedAt: serverTimestamp() })
+export function submitPrediction(name, answers) {
+  return addDoc(predictionsRef, { name, ...answers, submittedAt: serverTimestamp() })
 }
 
 export function subscribeToMessages(onChange) {
