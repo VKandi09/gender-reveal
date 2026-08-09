@@ -14,11 +14,11 @@ export function playCurtain({ selector = '.curtain', panels = 8, duration = 1.1,
   }
 
 
-  // tint panels alternating pink/blue for reveal theme with a richer gradient
+  // tint panels alternating cream/gray for reveal theme with a richer gradient
   items.forEach((el, i) => {
-    const pink = 'linear-gradient(180deg, #ff9dc1 0%, #ffd6e6 45%, #ffeaf4 100%)'
-    const blue = 'linear-gradient(180deg, #8fb7ff 0%, #c7d8ff 45%, #e8efff 100%)'
-    el.style.background = i % 2 === 0 ? pink : blue
+    const cream = 'linear-gradient(180deg, #e6d7bb 0%, #f2e9d8 45%, #faf5ea 100%)'
+    const gray = 'linear-gradient(180deg, #c9c6be 0%, #dedbd4 45%, #f0eee9 100%)'
+    el.style.background = i % 2 === 0 ? cream : gray
     el.style.border = '1px solid rgba(255,255,255,0.24)'
     el.style.boxShadow = 'inset 0 0 120px rgba(255,255,255,0.18), 0 30px 80px rgba(15,23,42,0.12)'
     el.style.transformOrigin = i % 2 === 0 ? 'bottom center' : 'top center'

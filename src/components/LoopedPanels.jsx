@@ -299,8 +299,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   const totalVotes = voteCounts.boy + voteCounts.girl
   const boyPct = totalVotes ? Math.round((voteCounts.boy / totalVotes) * 100) : 50
   const girlPct = 100 - boyPct
-  const lavenderGradient = 'linear-gradient(135deg, #EDE5FF 0%, #FFFFFF 100%)'
-  const blueGradient = 'linear-gradient(135deg, #cee4f7 0%, #FFFFFF 100%)'
+  const creamGradient = 'linear-gradient(135deg, #F0E9DC 0%, #FFFFFF 100%)'
   const themeGradient = 'linear-gradient(180deg, var(--bg-start), var(--bg-mid))'
 
   const panels = [
@@ -370,7 +369,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     <section ref={panelsRef} className="loop-section w-full relative bg-transparent text-neutral-900">
       {panels.map((panel, i) => {
         const isThemePanel = i % 2 === 1
-        const background = panel.background || (isThemePanel ? themeGradient : lavenderGradient)
+        const background = panel.background || (isThemePanel ? themeGradient : creamGradient)
 
         return (
           <div key={i} className="panel" style={{ background }}>

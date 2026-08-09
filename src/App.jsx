@@ -195,7 +195,7 @@ export default function App() {
           {/* Render only the first landing section */}
           <section className={`min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-transparent text-neutral-800`}>
             <div className="relative z-10 max-w-5xl text-center px-4 sm:px-6" style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.06))' }}>
-              <div ref={titleRef} className="mt-10 great-vibes-regular text-pink-600 mb-6 text-2xl sm:text-3xl">
+              <div ref={titleRef} className="mt-10 great-vibes-regular text-red-600 mb-6 text-2xl sm:text-3xl">
                 <SplitText text={SECTIONS[0].title} />
               </div>
               <div ref={subtitleRef} className="yesteryear-regular uppercase tracking-[0.35em] text-pink-600 mb-6">
@@ -217,8 +217,8 @@ export default function App() {
                 <p><SplitText className="yesteryear-regular" text="we'd love for YOU to join the fun!" /></p>
               </div>
               <div ref={promptRef} className="mt-10 flex flex-col items-center gap-6 opacity-0">
-                <span className="font-semibold italianno-regular uppercase tracking-[0.35em] text-xl text-pink-600">Scroll to continue</span>
-                <svg className="h-8 w-8 text-pink-600 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <span className="font-bold italianno-regular uppercase tracking-[0.35em] text-3xl text-red-600">Scroll to continue</span>
+                <svg className="h-8 w-8 text-red-600 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 5v14" />
                   <path d="M19 12l-7 7-7-7" />
                 </svg>
