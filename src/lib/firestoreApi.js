@@ -15,6 +15,7 @@ const votesRef = doc(db, 'votes', 'tally')
 const voteRecordsRef = collection(db, 'voteRecords')
 const predictionsRef = collection(db, 'predictions')
 const messagesRef = collection(db, 'messages')
+const revealTriggersRef = collection(db, 'revealTriggers')
 
 export function subscribeToVotes(onChange) {
   return onSnapshot(votesRef, (snap) => {
@@ -61,6 +62,17 @@ export function subscribeToPredictions(onChange) {
 
 export function subscribeToVoteRecords(onChange) {
   const q = query(voteRecordsRef, orderBy('votedAt', 'desc'))
+  return onSnapshot(q, (snap) => {
+    onChange(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
+  })
+}
+
+export function recordRevealTrigger(name) {
+  return addDoc(revealTriggersRef, { name, revealedAt: serverTimestamp() })
+}
+
+export function subscribeToRevealTriggers(onChange) {
+  const q = query(revealTriggersRef, orderBy('revealedAt', 'desc'))
   return onSnapshot(q, (snap) => {
     onChange(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
   })

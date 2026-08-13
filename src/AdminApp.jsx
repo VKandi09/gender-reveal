@@ -3,6 +3,7 @@ import { signIn, signOutAdmin, subscribeToAuthState } from './lib/adminAuth'
 import {
   subscribeToMessages,
   subscribeToPredictions,
+  subscribeToRevealTriggers,
   subscribeToVoteRecords,
   subscribeToVotes,
 } from './lib/firestoreApi'
@@ -85,17 +86,20 @@ function Dashboard({ user }) {
   const [predictions, setPredictions] = useState([])
   const [voteRecords, setVoteRecords] = useState([])
   const [voteCounts, setVoteCounts] = useState({ boy: 0, girl: 0 })
+  const [revealTriggers, setRevealTriggers] = useState([])
 
   useEffect(() => {
     const unsub1 = subscribeToMessages(setMessages)
     const unsub2 = subscribeToPredictions(setPredictions)
     const unsub3 = subscribeToVoteRecords(setVoteRecords)
     const unsub4 = subscribeToVotes(setVoteCounts)
+    const unsub5 = subscribeToRevealTriggers(setRevealTriggers)
     return () => {
       unsub1()
       unsub2()
       unsub3()
       unsub4()
+      unsub5()
     }
   }, [])
 
@@ -167,6 +171,16 @@ function Dashboard({ user }) {
                 Team {v.team === 'boy' ? 'Boy' : 'Girl'}
               </span>
               <p className="text-xs text-slate-400">{formatTime(v.votedAt)}</p>
+            </div>
+          ))}
+        </Section>
+
+        <Section title="Reveal Triggers" count={`${revealTriggers.length} total`}>
+          {revealTriggers.length === 0 && <p className="p-5 text-sm text-slate-400">No one has triggered the reveal yet.</p>}
+          {revealTriggers.map((r) => (
+            <div key={r.id} className="p-4 flex items-center justify-between">
+              <p className="font-medium text-slate-900">{r.name}</p>
+              <p className="text-xs text-slate-400">{formatTime(r.revealedAt)}</p>
             </div>
           ))}
         </Section>

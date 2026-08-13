@@ -10,6 +10,7 @@ import {
   submitPrediction,
   subscribeToMessages,
   addMessage,
+  recordRevealTrigger,
 } from '../lib/firestoreApi'
 import JourneyPanel from './panels/JourneyPanel'
 import PredictionPanel from './panels/PredictionPanel'
@@ -251,8 +252,11 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     }
   }
 
-  const startReveal = () => {
+  const startReveal = (name) => {
     if (revealed || isCounting) return
+    const revealerName = (name || confirmedName || '').trim() || 'Anonymous'
+    if (!confirmedName && name?.trim()) setConfirmedName(name.trim())
+    recordRevealTrigger(revealerName).catch((err) => console.error('Failed to record reveal trigger', err))
     setCountdown(3)
     setIsCounting(true)
   }
@@ -360,6 +364,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           countdown={countdown}
           startReveal={startReveal}
           result={result}
+          confirmedName={confirmedName}
         />
       ),
     },

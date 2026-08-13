@@ -53,9 +53,11 @@ function BoyBalloons({ count = 12 }) {
   )
 }
 
-export default function FinalRevealPanel({ revealed, isCounting, countdown, startReveal, result }) {
+export default function FinalRevealPanel({ revealed, isCounting, countdown, startReveal, result, confirmedName }) {
   const [hasWonGame, setHasWonGame] = useState(false)
+  const [nameInput, setNameInput] = useState('')
   const hasPlayedSound = useRef(false)
+  const readyName = confirmedName || nameInput.trim()
 
   useEffect(() => {
     if (revealed && !hasPlayedSound.current) {
@@ -69,12 +71,24 @@ export default function FinalRevealPanel({ revealed, isCounting, countdown, star
       <p className="italianno-regular text-4xl sm:text-5xl">Ready?</p>
       {!revealed && !isCounting && (
         hasWonGame ? (
-          <button
-            onClick={startReveal}
-            className="rounded-full bg-neutral-900 px-8 py-4 text-white italianno-regular text-3xl shadow-2xl transition hover:bg-neutral-800"
-          >
-            Reveal Our Secret
-          </button>
+          <div className="flex flex-col items-center gap-4">
+            {!confirmedName && (
+              <input
+                type="text"
+                value={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+                placeholder="Your name, for the reveal moment"
+                className="w-full max-w-xs rounded-full border border-neutral-300 px-5 py-3 text-center text-lg focus:border-neutral-900 focus:outline-none"
+              />
+            )}
+            <button
+              onClick={() => startReveal(readyName)}
+              disabled={!readyName}
+              className="rounded-full bg-neutral-900 px-8 py-4 text-white italianno-regular text-3xl shadow-2xl transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Reveal Our Secret
+            </button>
+          </div>
         ) : (
           <TicTacToe onWin={() => setHasWonGame(true)} />
         )
