@@ -291,6 +291,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           setGuestMessage={setGuestMessage}
           addCard={addCard}
           displayedCards={displayedCards}
+          lastSubmittedId={lastSubmittedId}
         />
       ),
     },
