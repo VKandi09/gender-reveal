@@ -35,7 +35,7 @@ export function playCurtain({ selector = '.curtain', panels = 8, duration = 1.1,
     tl.fromTo(
       message,
       { autoAlpha: 0, y: 24, scale: 0.92 },
-      { autoAlpha: 1, y: 0, scale: 1, duration: 0.8 }
+      { autoAlpha: 1, y: -24, scale: 1, duration: 0.8 }
     )
   }
 

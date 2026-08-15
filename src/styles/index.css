@@ -91,6 +91,7 @@ html, body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: min(90vw, 640px);
   z-index: 10000;
   font-size: 2.6rem;
   font-weight: 400;
@@ -237,6 +238,7 @@ html, body {
 
 @media (max-width: 480px) {
   .curtain__message {
+    width: 94vw;
     font-size: 1.9rem;
     padding: 0 1rem;
   }

@@ -79,7 +79,7 @@ export default function VotePanel({
           </p>
           <p className="mt-2 text-2xl font-bold md:text-3xl">{totalVotes}</p>
         </div>
-        <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-3">
           <div className="rounded-3xl border border-slate-200 bg-slate-50 p-3 lg:p-4">
             <div className="flex flex-col items-start gap-1 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
               <div>
