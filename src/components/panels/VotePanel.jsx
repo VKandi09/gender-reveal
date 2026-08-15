@@ -64,7 +64,7 @@ export default function VotePanel({
           <button
             type="button"
             onClick={onSwitchGuest}
-            className="text-xs text-slate-400 underline decoration-dotted underline-offset-2 transition hover:text-slate-600"
+            className="!mt-0 text-sm text-slate-400 underline decoration-dotted underline-offset-2 transition hover:text-slate-600"
           >
             Not you? Let someone else vote
           </button>
