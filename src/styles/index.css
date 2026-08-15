@@ -124,6 +124,13 @@ html, body {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Content taller than the panel: top-align so overflow only spills
+   downward into the next (higher z-index) panel, never bleeding
+   upward onto the previous one. */
+.panel-inner.content-overflow {
+  justify-content: flex-start;
+}
+
 @media (max-width: 768px) {
   .panel-inner { padding: 2rem 1rem; max-width: 100%; }
 }

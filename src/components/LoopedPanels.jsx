@@ -153,6 +153,29 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     }
   }, [])
 
+  // Center panel content when it fits; top-align it when it's taller than
+  // the panel, so overflow only ever spills downward (into the next,
+  // higher-stacked panel) instead of bleeding onto the previous one.
+  useEffect(() => {
+    const measureOverflow = () => {
+      const container = panelsRef.current
+      if (!container) return
+      container.querySelectorAll('.panel-inner').forEach((inner) => {
+        const content = inner.firstElementChild
+        if (!content) return
+        inner.classList.toggle('content-overflow', content.scrollHeight > window.innerHeight)
+      })
+    }
+
+    measureOverflow()
+    const raf = requestAnimationFrame(measureOverflow)
+    window.addEventListener('resize', measureOverflow)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', measureOverflow)
+    }
+  }, [displayedCards])
+
   const handleVote = (team) => {
     if (selectedVote) return
     setSelectedVote(team)
@@ -309,7 +332,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
 
         return (
           <div key={i} className="panel" style={{ background, zIndex: i + 1 }}>
-            <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-start h-full">
+            <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-center h-full">
               <div className="w-full">
                 <h3 className={`yesteryear-regular text-gray-700 text-4xl sm:text-5xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
                 <div className="mb-6 text-xl sm:text-2xl opacity-90">{panel.content}</div>

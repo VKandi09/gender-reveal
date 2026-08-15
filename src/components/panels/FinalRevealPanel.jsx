@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import TicTacToe from '../TicTacToe'
 import { playRevealSound } from '../../anim/sound'
+import babyBoyImage from '../../assets/baby-boy.png'
 
 function BoyBalloons({ count = 12 }) {
   const balloons = useMemo(
@@ -127,6 +128,16 @@ export default function FinalRevealPanel({ revealed, isCounting, countdown, star
             >
               {result === 'boy' ? "It's a Boy!" : "It's a Girl!"}
             </motion.p>
+            {result === 'boy' && (
+              <motion.img
+                src={babyBoyImage}
+                alt="It's a boy"
+                initial={{ y: 20, opacity: 0, scale: 0.9 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ delay: 0.55, duration: 0.5 }}
+                className="mx-auto mt-8 w-48 sm:w-64 rounded-3xl shadow-xl"
+              />
+            )}
           </motion.div>
         </div>
       )}
