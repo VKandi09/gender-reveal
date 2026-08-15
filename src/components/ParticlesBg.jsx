@@ -10,7 +10,7 @@ export default function ParticlesBg() {
     let height = (canvas.height = window.innerHeight)
 
     const colors = ['#ff7ab6', '#4f8cff', '#ffd86b', '#9b8cff']
-    const particles = Array.from({ length: 90 }).map(() => ({
+    const particles = Array.from({ length: 30 }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.6,
