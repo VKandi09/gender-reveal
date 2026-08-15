@@ -207,17 +207,17 @@ export default function App() {
                 <SplitText className="italianno-regular" text="is finally ready to be shared." />
               </h1>
               <div ref={heroTextRef} className="mt-8 space-y-6 text-center text-2xl sm:text-2xl leading-relaxed opacity-90 max-w-3xl mx-auto yesteryear-regular">
-                <p><SplitText className="italianno-regular text-4xl sm:text-4xl leading-tight text-gray-700" text="Our family is growing..." /></p>
-                <p><SplitText className="italianno-regular text-4xl sm:text-4xl leading-tight text-gray-700" text="and we've been keeping one very exciting secret." /></p>
+                <p><SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="Our family is growing..." /></p>
+                <p><SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="and we've been keeping one very exciting secret." /></p>
                 <p>
-                  <SplitText className="italianno-regular text-4xl sm:text-4xl leading-tight text-gray-700" text="Before we reveal whether Baby Gangarajula is a" />
+                  <SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="Before we reveal whether Baby Gangarajula is a" />
                   <br />
-                  <SplitText className="italianno-regular text-4xl sm:text-4xl leading-tight text-gray-700" text="Baby Boy or Baby Girl..." />
+                  <SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="Baby Boy or Baby Girl..." />
                 </p>
                 <p>
-                  <SplitText className="italianno-regular text-4xl sm:text-4xl leading-tight text-gray-700" text="we'd love for" />{' '}
-                  <SplitText className="italianno-regular text-4xl sm:text-4xl leading-tight text-gray-700" text="YOU" />{' '}
-                  <SplitText className="italianno-regular text-4xl sm:text-4xl leading-tight text-gray-700" text="to join the fun!" />
+                  <SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="we'd love for" />{' '}
+                  <SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="YOU" />{' '}
+                  <SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="to join the fun!" />
                 </p>
               </div>
               <div ref={promptRef} className="mt-10 flex flex-col items-center gap-6 opacity-0">
