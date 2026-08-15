@@ -9,6 +9,7 @@ export default function VotePanel({
   voteCounts,
   boyPct,
   girlPct,
+  onSwitchGuest,
 }) {
   return (
     <div className="grid gap-6 w-full text-left items-start md:grid-cols-[1.4fr_0.9fr]">
@@ -58,6 +59,15 @@ export default function VotePanel({
           <div className="rounded-3xl border border-slate-200 bg-white/90 px-4 py-3 text-sm font-semibold text-neutral-900 shadow-lg lg:px-5 lg:py-4">
             Your vote is live — thank you for joining the fun!
           </div>
+        )}
+        {selectedVote && (
+          <button
+            type="button"
+            onClick={onSwitchGuest}
+            className="text-xs text-slate-400 underline decoration-dotted underline-offset-2 transition hover:text-slate-600"
+          >
+            Not you? Let someone else vote
+          </button>
         )}
       </div>
 

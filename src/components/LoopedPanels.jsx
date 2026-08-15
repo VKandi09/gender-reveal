@@ -7,44 +7,14 @@ gsap.registerPlugin(ScrollTrigger, SplitText)
 import {
   subscribeToVotes,
   castVote,
-  submitPrediction,
   subscribeToMessages,
   addMessage,
   recordRevealTrigger,
 } from '../lib/firestoreApi'
 import JourneyPanel from './panels/JourneyPanel'
-import PredictionPanel from './panels/PredictionPanel'
 import VotePanel from './panels/VotePanel'
 import MessageWallPanel from './panels/MessageWallPanel'
 import FinalRevealPanel from './panels/FinalRevealPanel'
-
-const questions = [
-  {
-    key: 'firstWord',
-    prompt: "What do you think Baby's first word will be?",
-    options: ['Mama', 'Dada', 'Food 😂', 'Doggy'],
-  },
-  {
-    key: 'lookLike',
-    prompt: 'Who will Baby look like?',
-    options: ['Mom', 'Dad', 'Perfect Mix'],
-  },
-  {
-    key: 'spoil',
-    prompt: 'Which parent will spoil Baby more?',
-    options: ['Mom', 'Dad', 'Grandparents 😂'],
-  },
-  {
-    key: 'owl',
-    prompt: 'Night Owl or Early Bird?',
-    options: ['Sleeps all day', 'Awake all night', 'Tiny Boss 😆'],
-  },
-  {
-    key: 'closest',
-    prompt: 'Who will Baby be closest to?',
-    options: ['Mom', 'Dad', 'Grandparents', 'Everyone ❤️'],
-  },
-]
 
 export default function LoopedPanels({ onReveal, revealed, result }) {
   const [selectedVote, setSelectedVote] = useState(() =>
@@ -52,13 +22,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   )
   const [voteCounts, setVoteCounts] = useState({ boy: 0, girl: 0 })
   const [voteToast, setVoteToast] = useState(false)
-  const [answers, setAnswers] = useState({
-    firstWord: '',
-    lookLike: '',
-    spoil: '',
-    owl: '',
-    closest: '',
-  })
   const [cards, setCards] = useState([])
   const [guestName, setGuestName] = useState('')
   const [confirmedName, setConfirmedName] = useState('')
@@ -71,11 +34,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
 
   const journeyRef = useRef(null)
   const panelsRef = useRef(null)
-  const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [predictionSubmitted, setPredictionSubmitted] = useState(false)
-
-  const allAnswered = Object.values(answers).every(Boolean)
-  const isLastQuestion = currentQuestion === questions.length - 1
 
   useEffect(() => {
     const unsubscribeVotes = subscribeToVotes(setVoteCounts)
@@ -85,20 +43,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       unsubscribeMessages()
     }
   }, [])
-
-  const showPrevious = () => {
-    setCurrentQuestion((value) => Math.max(0, value - 1))
-  }
-
-  const showNext = () => {
-    setCurrentQuestion((value) => Math.min(questions.length - 1, value + 1))
-  }
-
-  const submitPredictions = () => {
-    if (predictionSubmitted || !isLastQuestion || !allAnswered) return
-    setPredictionSubmitted(true)
-    submitPrediction(confirmedName, answers).catch((err) => console.error('Failed to submit prediction', err))
-  }
 
   useEffect(() => {
     if (!isCounting) return
@@ -224,8 +168,11 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       })
   }
 
-  const handleAnswer = (key, value) => {
-    setAnswers((prev) => ({ ...prev, [key]: value }))
+  const switchGuestVote = () => {
+    window.localStorage.removeItem('gr-voted-team')
+    setSelectedVote(null)
+    setConfirmedName('')
+    setGuestName('')
   }
 
   const updateGuestName = (value) => {
@@ -324,23 +271,6 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
         />
       ),
     },
-    // {
-    //   title: 'Fun Prediction Game',
-    //   content: (
-    //     <PredictionPanel
-    //       questions={questions}
-    //       currentQuestion={currentQuestion}
-    //       showPrevious={showPrevious}
-    //       showNext={showNext}
-    //       handleAnswer={handleAnswer}
-    //       answers={answers}
-    //       submitPredictions={submitPredictions}
-    //       isLastQuestion={isLastQuestion}
-    //       allAnswered={allAnswered}
-    //       predictionSubmitted={predictionSubmitted}
-    //     />
-    //   ),
-    // },
     {
       title: 'Guess the Baby!',
       content: (
@@ -352,6 +282,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           voteCounts={voteCounts}
           boyPct={boyPct}
           girlPct={girlPct}
+          onSwitchGuest={switchGuestVote}
         />
       ),
     },
@@ -377,8 +308,8 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
         const background = panel.background || (isThemePanel ? themeGradient : creamGradient)
 
         return (
-          <div key={i} className="panel" style={{ background }}>
-            <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-center h-full">
+          <div key={i} className="panel" style={{ background, zIndex: i + 1 }}>
+            <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-start h-full">
               <div className="w-full">
                 <h3 className={`yesteryear-regular text-gray-700 text-4xl sm:text-5xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
                 <div className="mb-6 text-xl sm:text-2xl opacity-90">{panel.content}</div>

@@ -38,10 +38,6 @@ export function castVote(name, team) {
   return tallyWrite
 }
 
-export function submitPrediction(name, answers) {
-  return addDoc(predictionsRef, { name, ...answers, submittedAt: serverTimestamp() })
-}
-
 export function subscribeToMessages(onChange) {
   const q = query(messagesRef, orderBy('createdAt', 'desc'))
   return onSnapshot(q, (snap) => {
