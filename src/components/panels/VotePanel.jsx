@@ -13,8 +13,8 @@ export default function VotePanel({
 }) {
   return (
     <div className="grid gap-2 w-full text-left items-start md:grid-cols-[1.4fr_0.9fr]">
-      <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-4 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:p-6 md:sticky md:top-24 overflow-visible">
-        <div className="space-y-3">
+      <div className="space-y-3 rounded-[2.5rem] border border-white/80 bg-white/90 p-4 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:p-6 md:sticky md:top-24 overflow-visible">
+        <div className="space-y-1">
           <p className="italianno-regular text-3xl md:text-4xl">Before We Reveal...</p>
           <p className="text-sm text-slate-600 opacity-90 md:text-base">Tap your prediction and help us see which team is the loudest one.</p>
         </div>

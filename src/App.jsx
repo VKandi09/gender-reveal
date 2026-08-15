@@ -195,12 +195,12 @@ export default function App() {
           {/* Render only the first landing section */}
           <section className={`min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-transparent text-neutral-800`}>
             <div className="relative z-10 max-w-5xl text-center px-4 sm:px-6" style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.06))' }}>
-              <div ref={titleRef} className="mt-10 great-vibes-regular text-red-600 mb-6 text-2xl sm:text-3xl">
+              <div ref={titleRef} className="mt-10 great-vibes-regular text-red-600 mb-4 text-2xl sm:text-3xl">
                 <SplitText text={SECTIONS[0].title} />
               </div>
-              <div ref={subtitleRef} className="yesteryear-regular uppercase tracking-[0.35em] text-pink-600 mb-6">
+              {/* <div ref={subtitleRef} className="yesteryear-regular uppercase tracking-[0.35em] text-pink-600 mb-6">
                 <SplitText text={SECTIONS[0].subtitle} />
-              </div>
+              </div> */}
               <h1 ref={heroTitleRef} className="text-5xl sm:text-6xl font-extrabold leading-snug sm:leading-tight">
                 <SplitText className="italianno-regular" text="A Tiny Secret..." />
                 <br />
