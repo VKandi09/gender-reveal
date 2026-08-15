@@ -12,7 +12,7 @@ export default function VotePanel({
   onSwitchGuest,
 }) {
   return (
-    <div className="grid gap-6 w-full text-left items-start md:grid-cols-[1.4fr_0.9fr]">
+    <div className="grid gap-2 w-full text-left items-start md:grid-cols-[1.4fr_0.9fr]">
       <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-4 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:p-6 md:sticky md:top-24 overflow-visible">
         <div className="space-y-3">
           <p className="italianno-regular text-3xl md:text-4xl">Before We Reveal...</p>
@@ -71,7 +71,7 @@ export default function VotePanel({
         )}
       </div>
 
-      <div className="space-y-6 rounded-[2.5rem] border border-white/80 bg-white/90 p-5 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:p-6">
+      <div className="space-y-2 rounded-[2.5rem] border border-white/80 bg-white/90 p-5 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:p-6">
         <div className="flex md:flex-col items-center justify-between text-center rounded-3xl bg-slate-900 px-4 py-4 text-white shadow-lg lg:px-5 lg:py-4">
           <p className="italianno-regular text-xl text-slate-300 flex items-center justify-center gap-2">
             <span className="inline-flex h-3 w-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_0_rgba(16,185,129,0.65)]" />
