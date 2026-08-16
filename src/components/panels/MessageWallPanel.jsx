@@ -14,7 +14,7 @@ export default function MessageWallPanel({
 
   return (
     <div className="space-y-6 max-w-3xl mx-auto text-left">
-      <p className="italianno-regular text-4xl sm:text-5xl text-center">Leave Baby Your First Blessing</p>
+      <p className="italianno-regular text-4xl sm:text-5xl text-center">Drop a Little Love Note to our Little One! 💌</p>
       <div className={hasMessages ? 'grid gap-4 md:grid-cols-[1.4fr_1fr]' : 'flex justify-center'}>
         <div className={`space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-md ${hasMessages ? '' : 'w-full max-w-xl'}`}>
           <div>

@@ -278,11 +278,11 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
 
   const panels = [
     {
-      title: 'Our Journey ❤️',
+      title: 'The Day Our World Changed ❤️',
       content: <JourneyPanel journeyRef={journeyRef} />,
     },
     {
-      title: 'Message Wall ❤️',
+      title: "Baby's First Mailbox 📬",
       content: (
         <MessageWallPanel
           guestName={guestName}
@@ -296,7 +296,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       ),
     },
     {
-      title: 'Guess the Baby!',
+      title: "Let’s See Who Gets It Right! 👀",
       content: (
         <VotePanel
           selectedVote={selectedVote}
@@ -311,7 +311,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       ),
     },
     {
-      title: 'Final Reveal',
+      title: 'And the Little Mystery Is..👶✨',
       content: (
         <FinalRevealPanel
           revealed={revealed}
@@ -335,7 +335,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           <div key={i} className="panel" style={{ background, zIndex: i + 1 }}>
             <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-center h-full">
               <div className="w-full">
-                <h3 className={`yesteryear-regular text-gray-700 text-4xl sm:text-5xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
+                <h3 className={`yesteryear-regular text-gray-700 text-4xl sm:text-4xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
                 <div className="mb-6 text-xl sm:text-2xl opacity-90">{panel.content}</div>
               </div>
             </div>

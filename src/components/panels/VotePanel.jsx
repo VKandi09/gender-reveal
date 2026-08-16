@@ -61,13 +61,16 @@ export default function VotePanel({
           </div>
         )}
         {selectedVote && (
-          <button
+          <motion.button
             type="button"
             onClick={onSwitchGuest}
-            className="!mt-0 text-sm text-slate-400 underline decoration-dotted underline-offset-2 transition hover:text-slate-600"
+            className="!mt-0 bg-gradient-to-r from-pink-500 via-sky-500 to-pink-500 bg-clip-text text-lg font-semibold text-transparent underline decoration-dotted underline-offset-2 transition hover:opacity-80"
+            style={{ backgroundSize: '200% auto' }}
+            animate={{ backgroundPosition: ['0% center', '200% center'] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
           >
             Not you? Let someone else vote
-          </button>
+          </motion.button>
         )}
       </div>
 
