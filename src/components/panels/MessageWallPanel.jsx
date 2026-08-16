@@ -13,10 +13,10 @@ export default function MessageWallPanel({
   const submittedCard = displayedCards.find((card) => card.id === lastSubmittedId)
 
   return (
-    <div className="space-y-6 max-w-3xl mx-auto text-left">
+    <div className="space-y-4 max-w-3xl mx-auto text-left">
       <p className="italianno-regular text-4xl sm:text-5xl text-center">Drop a Little Love Note to our Little One! 💌</p>
       <div className={hasMessages ? 'grid gap-4 md:grid-cols-[1.4fr_1fr]' : 'flex justify-center'}>
-        <div className={`space-y-4 rounded-3xl border border-white/50 bg-white/80 p-6 shadow-md ${hasMessages ? '' : 'w-full max-w-xl'}`}>
+        <div className={`space-y-4 rounded-3xl border border-white/50 bg-white/80 p-3 shadow-md ${hasMessages ? '' : 'w-full max-w-xl'}`}>
           <div>
             <label className="block yesteryear-regular text-2xl text-neutral-900">Name</label>
             <input
@@ -54,7 +54,7 @@ export default function MessageWallPanel({
         {hasMessages && (
           <div className="hidden space-y-4 sm:block">
             {displayedCards.map((card) => (
-              <div key={card.id} className="rounded-3xl border border-white/60 bg-white/90 p-5 shadow-lg">
+              <div key={card.id} className="rounded-3xl border border-white/60 bg-white/90 p-3 shadow-lg">
                 <p className="text-sm uppercase tracking-[0.22em] text-pink-600">{card.name}</p>
                 <p className="mt-3 zeyada-regular text-xl sm:text-2xl text-neutral-900">{card.message}</p>
               </div>

@@ -335,7 +335,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           <div key={i} className="panel" style={{ background, zIndex: i + 1 }}>
             <div className="panel-inner nunito-700 text-center px-0 flex flex-col items-center justify-center h-full">
               <div className="w-full">
-                <h3 className={`yesteryear-regular text-gray-700 text-4xl sm:text-4xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
+                <h3 className={`yesteryear-regular text-gray-700 text-4xl md:text-4xl sm:text-2xl font-extrabold mb-4 leading-tight`}>{panel.title}</h3>
                 <div className="mb-6 text-xl sm:text-2xl opacity-90">{panel.content}</div>
               </div>
             </div>

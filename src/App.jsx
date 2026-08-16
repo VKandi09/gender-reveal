@@ -206,7 +206,7 @@ export default function App() {
                 <br />
                 <SplitText className="italianno-regular" text="is finally ready to be shared." />
               </h1>
-              <div ref={heroTextRef} className="mt-8 space-y-6 text-center text-2xl sm:text-2xl leading-relaxed opacity-90 max-w-3xl mx-auto yesteryear-regular">
+              <div ref={heroTextRef} className="mt-8 space-y-3 text-center text-2xl sm:text-2xl leading-relaxed opacity-90 max-w-3xl mx-auto yesteryear-regular">
                 <p><SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="Our family is growing..." /></p>
                 <p><SplitText className="italianno-regular text-4xl sm:text-3xl leading-tight text-gray-700" text="and we've been keeping one very exciting secret." /></p>
                 <p>
