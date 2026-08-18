@@ -31,6 +31,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
   const [lastSubmittedId, setLastSubmittedId] = useState(null)
   const lastSubmittedTimeoutRef = useRef(null)
   const [displayedCards, setDisplayedCards] = useState([])
+  const [messageError, setMessageError] = useState('')
 
   const journeyRef = useRef(null)
   const panelsRef = useRef(null)
@@ -207,10 +208,11 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
     if (!guestName.trim() || !guestMessage.trim()) return
     const name = guestName.trim()
     const message = guestMessage.trim()
-    setGuestName('')
-    setGuestMessage('')
+    setMessageError('')
     try {
       const ref = await addMessage(name, message)
+      setGuestName('')
+      setGuestMessage('')
       setLastSubmittedId(ref.id)
       if (lastSubmittedTimeoutRef.current) window.clearTimeout(lastSubmittedTimeoutRef.current)
       lastSubmittedTimeoutRef.current = window.setTimeout(() => {
@@ -219,6 +221,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
       }, 5000)
     } catch (err) {
       console.error('Failed to submit message', err)
+      setMessageError("Couldn't send your message — please try again.")
     }
   }
 
@@ -292,6 +295,7 @@ export default function LoopedPanels({ onReveal, revealed, result }) {
           addCard={addCard}
           displayedCards={displayedCards}
           lastSubmittedId={lastSubmittedId}
+          messageError={messageError}
         />
       ),
     },

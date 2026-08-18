@@ -8,6 +8,7 @@ export default function MessageWallPanel({
   addCard,
   displayedCards,
   lastSubmittedId,
+  messageError,
 }) {
   const hasMessages = displayedCards.length > 0
   const submittedCard = displayedCards.find((card) => card.id === lastSubmittedId)
@@ -24,6 +25,7 @@ export default function MessageWallPanel({
               onChange={(e) => setGuestName(e.target.value)}
               className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-pink-400 text-xl"
               placeholder="Enter your name"
+              maxLength={60}
             />
           </div>
           <div>
@@ -34,6 +36,7 @@ export default function MessageWallPanel({
               className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-sky-400 text-xl"
               rows={4}
               placeholder="Write your blessing for baby"
+              maxLength={500}
             />
           </div>
           <button
@@ -42,6 +45,9 @@ export default function MessageWallPanel({
           >
             Add your message
           </button>
+          {messageError && (
+            <p className="text-sm font-semibold text-red-600">{messageError}</p>
+          )}
         </div>
         {submittedCard && (
           <div className="sm:hidden">
