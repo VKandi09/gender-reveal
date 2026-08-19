@@ -36,7 +36,7 @@ export default function MessageWallPanel({
               className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-sky-400 text-xl"
               rows={4}
               placeholder="Write your blessing for baby"
-              maxLength={500}
+              maxLength={1500}
             />
           </div>
           <button
